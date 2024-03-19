@@ -11,9 +11,10 @@ public:
     void addVertice(int x, int y, SDL_Color color);
     void addArista(int v, int w);
     void colorearGrafo();
+    void colorearGrafoWelshPowell();
     const std::vector<Vertice>& getVertices() const;
     const std::vector<std::vector<int>>& getAdj() const;
-    SDL_Color coloresDisponibles[6] = {
+    SDL_Color coloresDisponibles[2] = {
     {255, 0, 0, 255},   // Rojo
     {0, 255, 0, 255},   // Verde
     {0, 0, 255, 255},   // Azul

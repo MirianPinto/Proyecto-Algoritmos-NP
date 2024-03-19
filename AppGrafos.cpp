@@ -153,7 +153,12 @@ void Aplicacion::ejecutar() {
                         // Actualizar el último tiempo de ejecución
                         ultimoTiempoEjecucion = diff.count();
 
-                        std::cout << "Tiempo de ejecucion: " << ultimoTiempoEjecucion << " ms\n";
+                        auto start2 = std::chrono::high_resolution_clock::now();
+                        g.colorearGrafoWelshPowell();
+                        auto end2 = std::chrono::high_resolution_clock::now();
+
+                        std::cout << "Algoritmo aproximado: " << ultimoTiempoEjecucion << " ms\n";
+                        std::cout << "Algoritmo optimo: " << std::chrono::duration<double, std::milli>(end2 - start2).count() << " ms\n";
                     }
                 }
                 else if (event.key.keysym.sym == SDLK_r) {
