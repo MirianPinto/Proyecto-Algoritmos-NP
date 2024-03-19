@@ -1,22 +1,25 @@
 #pragma once
 #include "Game.h"
 
-class Mochila
+
+class Menu
 {
 public:
-	Mochila(SDL_Renderer* renderer, int mousex, int mousey);
-	~Mochila();
+	Menu();
+	~Menu();
 
-	void init();
-	void updateMochila();
-	void renderMochila();
-
-
-
+	void LoadMenu(SDL_Window* window, SDL_Renderer* renderer,int mousex, int mousey);
+	void updateMenu(int mousex, int mousey);
+	int handleEvents(int mousex, int mousey);
+	void render();
+	void Mochila();
+	void Grafos();
+	void Subconjuntos();
+	
 private:
 	SDL_Surface* background;
 	SDL_Texture* TextureBc;
-
+	
 	SDL_Rect SrcMenu;
 	SDL_Rect DestMenu;
 
@@ -27,8 +30,10 @@ private:
 
 	int mousexboton = 0;
 	int mouseyboton = 0;
-
+	int isRunning=0;
+	
 	SDL_Surface* Ventana;
 	SDL_Renderer* renderer;
 
+	
 };
