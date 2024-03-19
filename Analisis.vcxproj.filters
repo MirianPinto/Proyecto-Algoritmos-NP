@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de encabezado\Grafos">
+      <UniqueIdentifier>{eae76a65-ee54-4bd0-8969-fc12a23324c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de recursos\Grafos">
+      <UniqueIdentifier>{7d3ef702-afeb-463b-95ad-7b13cf028da6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,11 +27,14 @@
     <ClCompile Include="Mochila.cpp">
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
-    <ClCompile Include="Grafos.cpp">
-      <Filter>Archivos de recursos</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Archivos de recursos</Filter>
+    </ClCompile>
+    <ClCompile Include="AppGrafos.cpp">
+      <Filter>Archivos de recursos\Grafos</Filter>
+    </ClCompile>
+    <ClCompile Include="Grafos.cpp">
+      <Filter>Archivos de recursos\Grafos</Filter>
     </ClCompile>
     <ClCompile Include="Menu.cpp">
       <Filter>Archivos de recursos</Filter>
@@ -35,11 +44,17 @@
     <ClInclude Include="Mochila.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Grafos.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="AppGrafos.h">
+      <Filter>Archivos de encabezado\Grafos</Filter>
+    </ClInclude>
+    <ClInclude Include="Grafos.h">
+      <Filter>Archivos de encabezado\Grafos</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertice.h">
+      <Filter>Archivos de encabezado\Grafos</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
       <Filter>Archivos de encabezado</Filter>
