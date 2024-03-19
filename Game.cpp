@@ -46,7 +46,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     }
 
     // Cargar la fuente
-    font = TTF_OpenFont("C:\\Dev\\OpenSans-Light.ttf", 24); // Cambia la ruta a tu fuente y el tamaño según sea necesario
+    font = TTF_OpenFont("Assets\\SegoeUIItalic.ttf", 24); // Cambia la ruta a tu fuente y el tamaño según sea necesario
     if (font == nullptr) {
         std::cerr << "Error loading font: " << TTF_GetError() << std::endl;
         isRunning = false;
