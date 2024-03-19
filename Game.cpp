@@ -477,7 +477,7 @@ void Game::Mochila()
 
 
 		//Pantalla resultados
-		font2 = TTF_OpenFont("Assets/Roboto-Bold.ttf", 13);
+		font2 = TTF_OpenFont("Assets/Roboto-Bold.ttf", 18);
 		background = IMG_Load("Assets/ResultadosFrame.png");
 		ResultadosPan = SDL_CreateTextureFromSurface(renderer2, background);
 		SDL_FreeSurface(background);
@@ -2003,20 +2003,23 @@ int* Game::Casos1()
 {
 	auto start = chrono::high_resolution_clock::now();
 
-	unsigned t0, t1;
-	t0 = clock();
-	int tem = SizeMochila;
+
+	int temp = SizeMochila;
 	int x = 0;
 
 	for (int i = 0; i < 10; i++) 
 	{
-		if ((tem / pesoObj[i]) > 0)
+		if ((temp / pesoObj[i]) > 0 || temp == pesoObj[i])
 		{
-			tem = tem -pesoObj[i];
+			temp = temp - pesoObj[i];
 			caso1[10] += ValorObj[i];
 			
 			caso1[x] = i + 1;
 			x++;
+			if (temp == 0) 
+			{
+				break;
+			}
 		}
 	}
 
@@ -2104,7 +2107,7 @@ int* Game::Casos3()
 
 	//Eleguir el objeto con el mayor peso
 	int temp = SizeMochila;
-	int mayorin = mayor();
+	int mayorin = 0;
 	int j = 0;
 
 	
