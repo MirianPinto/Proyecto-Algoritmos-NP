@@ -1,8 +1,7 @@
 
-
 #include "SDL.h"
 #include <iostream>
-#include "AppGrafos.h"
+
 #include "Game.h"
 
 Game* game = nullptr;

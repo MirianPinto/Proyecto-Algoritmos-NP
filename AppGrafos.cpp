@@ -75,18 +75,17 @@ void Aplicacion::renderizarTexto(const std::string& texto, int x, int y, SDL_Ren
 }
 
 
-void Aplicacion::ejecutar() {
+bool Aplicacion::ejecutar() {
     bool running = true;
     int firstVertice = -1;
     double ultimoTiempoEjecucion = 0.0;
     SDL_Rect textArea = { 10, 480 - 65, 230, 115 };
 
-  
     int imageWidth, imageHeight;
     SDL_QueryTexture(imageTexture, NULL, NULL, &imageWidth, &imageHeight); // Obtiene las dimensiones de la imagen
 
     int windowWidth, windowHeight;
-    SDL_GetWindowSize(window, &windowWidth, &windowHeight); 
+    SDL_GetWindowSize(window, &windowWidth, &windowHeight);
 
     while (running) {
         SDL_Event event;
@@ -130,7 +129,8 @@ void Aplicacion::ejecutar() {
                     // Comprobar si el clic está dentro del rectángulo de la segunda imagen
                     if (x >= 0 && x <= 50 && y >= 0 && y <= 50) {
                         printf("Regresar\n");
-                        vertexExists = true;
+                        running = false;
+                        return false; // Devuelve false para indicar que la aplicación debe cerrarse
                     }
                     if (!vertexExists && x > 10 && x < 630 && y > 10 && y < 470 && !isInsideTextArea) {
                         g.addVertice(x, y, { 255, 255, 255, 255 });
@@ -162,8 +162,8 @@ void Aplicacion::ejecutar() {
                     }
                 }
                 else if (event.key.keysym.sym == SDLK_r) {
-                    g = Grafo(); 
-                    ultimoTiempoEjecucion = 0.0; 
+                    g = Grafo();
+                    ultimoTiempoEjecucion = 0.0;
                 }
             }
         }
@@ -192,31 +192,32 @@ void Aplicacion::ejecutar() {
         }
 
         int grosor = 5; // Grosor del marco
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); 
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         for (int i = 0; i < grosor; i++) {
             SDL_Rect rect = { i, i, 640 - i * 2, 480 - i * 2 };
             SDL_RenderDrawRect(renderer, &rect);
         }
 
-
-
         SDL_Rect dstRect;
         dstRect.x = windowWidth - 50;
         dstRect.y = 0;
-        dstRect.w = 50; 
+        dstRect.w = 50;
         dstRect.h = 50;
 
         SDL_RenderCopy(renderer, imageTexture, NULL, &dstRect);
 
         SDL_Rect dstRect2;
-        dstRect2.x = 0; 
+        dstRect2.x = 0;
         dstRect2.y = 0;
-        dstRect2.w = 50; 
+        dstRect2.w = 50;
         dstRect2.h = 50;
         SDL_RenderCopy(renderer, imageTexture2, NULL, &dstRect2);
         SDL_RenderPresent(renderer);
     }
+
+    return true; // Devuelve true para indicar que la aplicación debe continuar ejecutándose
 }
+
 
 
 

@@ -6,6 +6,7 @@
 #include "Grafos.h"
 #include <SDL_ttf.h> 
 #include <string> 
+
 class Aplicacion {
     SDL_Window* window;
     SDL_Renderer* renderer;
@@ -16,7 +17,7 @@ class Aplicacion {
 public:
     Aplicacion();
     ~Aplicacion();
-    void ejecutar();
+    bool ejecutar();
     void renderizarTexto(const std::string& texto, int x, int y, SDL_Renderer* renderer);
     
     void mostrarInstrucciones();

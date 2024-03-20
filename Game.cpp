@@ -3,7 +3,7 @@
 #include <iomanip> 
 #include "Menu.h"
 #include <sstream>
-
+#include "AppGrafos.h"
 SDL_Texture* imagetext;
 Menu* menu;
 
@@ -20,8 +20,6 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos,int WIDTH, int HEIGHT, bool fullscreen)
 {
-	
-
 	pantalla = 0;
 	cnt = 0;
 	int flahs = 0;
@@ -46,7 +44,6 @@ void Game::init(const char* title, int xpos, int ypos,int WIDTH, int HEIGHT, boo
 	}
 
 	menu = new Menu();
-	
 }
 
 void Game::handleEvents() 
@@ -77,8 +74,25 @@ void Game::handleEvents()
 		}
 		else if (MouseX >= 137 && MouseX <= 414 && MouseY >= 421 && MouseY <= 488)
 		{
-			cout << "Grafos";
+			// Limpia los recursos de SDL antes de llamar a SDL_Quit()
+			SDL_DestroyRenderer(renderer);
+			SDL_DestroyWindow(window);
+
+			// Ahora puedes llamar a SDL_Quit()
+			SDL_Quit();
+
+			Aplicacion appGrafos;
+			bool continuar = appGrafos.ejecutar();
+
+			if (!continuar) {
+				// Inicializa SDL de nuevo y crea una nueva ventana y un nuevo renderizador
+					// Inicializa SDL de nuevo y crea una nueva ventana y un nuevo renderizador
+				init("GameWindow", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1000, 650, false);
+				run();
+			}
 		}
+
+
 		else if (MouseX >= 137 && MouseX <= 414 && MouseY >= 524 && MouseY <= 596)
 		{
 			cout << "Subconjuntos";
@@ -95,6 +109,17 @@ void Game::handleEvents()
 	
 
 }
+
+void Game::run() {
+	while (running())
+	{
+		handleEvents();
+		update();
+		render();
+	}
+	clean();
+}
+
 
 void Game::update()
 {
@@ -1769,6 +1794,7 @@ void Game::EventMochila()
 				SDL_Quit();
 				Resultados = 0;
 				init("GameWindow", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1000, 650, false);
+				run();
 			}
 			else if (MouseX >= 894 && MouseX <= 978 && MouseY >= 545 && MouseY <= 628)
 			{
