@@ -10,6 +10,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include "SDL.h"
+#include "subsetsum.h" 
 
 using namespace std;
 
@@ -54,7 +56,12 @@ private:
 	SDL_Rect posInicial;
 	SDL_Rect posFinal;
 
-
+	//pantalla Ibarra
+	TTF_Font* font; // Agregar un miembro para la fuente de texto
+	std::vector<int> numbers = { 3, 34, 4, 12, 5, 2, 14, 19, 7 }; // Conjunto de números
+	int targetSum = 9; // Objetivo de suma
+	void renderText(const char* text, int x, int y);
+	double subsetSumTime; // Almacenar el tiempo de ejecución del subset sum en segundos
 	//pantalla mirian
 	SDL_Window* window2;
 	SDL_Renderer* renderer2;

@@ -130,6 +130,7 @@ bool Aplicacion::ejecutar() {
                     if (x >= 0 && x <= 50 && y >= 0 && y <= 50) {
                         printf("Regresar\n");
                         running = false;
+                        SDL_Quit();
                         return false; // Devuelve false para indicar que la aplicación debe cerrarse
                     }
                     if (!vertexExists && x > 10 && x < 630 && y > 10 && y < 470 && !isInsideTextArea) {
@@ -157,8 +158,8 @@ bool Aplicacion::ejecutar() {
                         g.colorearGrafoWelshPowell();
                         auto end2 = std::chrono::high_resolution_clock::now();
 
-                        std::cout << "Algoritmo aproximado: " << ultimoTiempoEjecucion << " ms\n";
-                        std::cout << "Algoritmo optimo: " << std::chrono::duration<double, std::milli>(end2 - start2).count() << " ms\n";
+                        std::cout << "Algoritmo general: " << ultimoTiempoEjecucion << " ms\n";
+                        std::cout << "Algoritmo Welsh Powell: " << std::chrono::duration<double, std::milli>(end2 - start2).count() << " ms\n";
                     }
                 }
                 else if (event.key.keysym.sym == SDLK_r) {
@@ -225,7 +226,7 @@ void Aplicacion::mostrarInstrucciones() {
     std::string instrucciones =
         "Click izquierdo: Agregar vertice\n"
         "Click derecho: Agregar arista\n"
-        "Tecla 'r': Reiniciar todo\n"
+        "Tecla 'r': Reiniciar grafo\n"
         "Tecla 'c': Colorear";
 
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,

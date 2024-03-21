@@ -39,6 +39,9 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
+    <ClCompile Include="SubsetSum.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mochila.h">
@@ -57,6 +60,9 @@
       <Filter>Archivos de encabezado\Grafos</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="SubsetSum.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

@@ -42,7 +42,18 @@ void Game::init(const char* title, int xpos, int ypos,int WIDTH, int HEIGHT, boo
 	{
 		isRunning = false;
 	}
+	// Inicializar SDL_ttf
+	if (TTF_Init() == -1) {
+		std::cerr << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
+		isRunning = false;
+	}
 
+	// Cargar la fuente
+	font = TTF_OpenFont("Assets\\SegoeUIItalic.ttf", 24); // Cambia la ruta a tu fuente y el tamaño segun sea necesario
+	if (font == nullptr) {
+		std::cerr << "Error loading font: " << TTF_GetError() << std::endl;
+		isRunning = false;
+	}
 	menu = new Menu();
 }
 
@@ -96,6 +107,7 @@ void Game::handleEvents()
 		else if (MouseX >= 137 && MouseX <= 414 && MouseY >= 524 && MouseY <= 596)
 		{
 			cout << "Subconjuntos";
+			SubConjuntos();
 		}
 
 		break;
@@ -109,7 +121,16 @@ void Game::handleEvents()
 	
 
 }
+void Game::renderText(const char* text, int x, int y) {
+	SDL_Color textColor = { 255, 255, 255 };
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, textColor);
+	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+	SDL_Rect textRect = { x, y, textSurface->w, textSurface->h };
+	SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
 
+	SDL_FreeSurface(textSurface);
+	SDL_DestroyTexture(textTexture);
+}
 void Game::run() {
 	while (running())
 	{
@@ -2188,6 +2209,103 @@ int* Game::Casos3()
 	cout << scaso3;
 	cout << "\nRobado: " << sValor3;
 	return caso3;
+}
+
+void Game::SubConjuntos()
+{
+
+	SDL_Event event;
+	bool keepRunning = true;
+	while (keepRunning)
+	{
+		while (SDL_PollEvent(&event))
+		{
+			if (event.type == SDL_KEYDOWN)
+			{
+				if (event.key.keysym.sym == SDLK_s)
+				{
+					keepRunning = false;
+				}
+			}
+		}
+
+		SDL_RenderClear(renderer);
+
+		// Renderizar un marco blanco alrededor de la pantalla
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Color blanco
+
+		// Definir las dimensiones del marco
+		int frameWidth = 10; // Ancho del marco en pixeles
+		SDL_Rect frameRect = { frameWidth, frameWidth, 800 - 2 * frameWidth, 600 - 2 * frameWidth }; // Rectangulo interior que representa el area del marco
+
+		// Dibujar el marco blanco
+		SDL_RenderFillRect(renderer, &frameRect);
+
+		// Dibujar un rectangulo interior mas pequeño para representar el area principal de la pantalla
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Color negro para el interior
+		SDL_Rect innerRect = { 2 * frameWidth, 2 * frameWidth, 800 - 4 * frameWidth, 600 - 4 * frameWidth }; // Rectangulo interior mas pequeño
+		SDL_RenderFillRect(renderer, &innerRect);
+
+		// Renderizar la imagen en el centro de la pantalla
+		SDL_Surface* imageSurface = IMG_Load("Assets\\Pizarra.jpg");
+		if (imageSurface == nullptr) {
+			std::cerr << "Error al cargar la imagen: " << IMG_GetError() << std::endl;
+			// Manejar el error adecuadamente
+		}
+		else {
+			SDL_Texture* imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+			if (imageTexture == nullptr) {
+				std::cerr << "Error al crear la textura de la imagen: " << SDL_GetError() << std::endl;
+				// Manejar el error adecuadamente
+			}
+			else {
+				SDL_Rect imageRect; // Rectangulo para definir la posicion y tamaño de la imagen
+				imageRect.w = imageSurface->w;
+				imageRect.h = imageSurface->h;
+				imageRect.x = (800 - imageSurface->w) / 2; // Centrar horizontalmente
+				imageRect.y = (600 - imageSurface->h) / 2; // Centrar verticalmente
+
+				SDL_RenderCopy(renderer, imageTexture, nullptr, &imageRect);
+
+				SDL_DestroyTexture(imageTexture);
+			}
+			SDL_FreeSurface(imageSurface);
+		}
+
+		// Renderizar titulo "Problema del subconjunto"
+		std::string titleText = "Problema del subconjunto";
+		renderText(titleText.c_str(), (800 - titleText.length() * 10) / 2, 50); // Centrado horizontalmente
+
+		// Renderizar conjunto de numeros
+		std::string numbersText = "Conjunto de numeros: ";
+		for (size_t i = 0; i < numbers.size(); ++i) {
+			numbersText += std::to_string(numbers[i]);
+			if (i != numbers.size() - 1) {
+				numbersText += ", ";
+			}
+		}
+		renderText(numbersText.c_str(), 100, 100); // Renderizar conjunto de numeros en (100, 100)
+
+		// Verificar si el subconjunto existe y calcular el tiempo de ejecucion
+		SubsetSumSolver solver(numbers, targetSum);
+		bool existsSubset;
+		double subsetSumTime;
+		{
+			auto start = std::chrono::high_resolution_clock::now();
+			existsSubset = solver.existsSubset();
+			auto end = std::chrono::high_resolution_clock::now();
+			std::chrono::duration<double> elapsed_seconds = end - start;
+			subsetSumTime = elapsed_seconds.count(); // Almacenar el tiempo de ejecucion en segundos
+		}
+		std::string subsetResultText = existsSubset ? "El subconjunto con la suma objetivo existe." : "El subconjunto con la suma objetivo no existe.";
+		renderText(subsetResultText.c_str(), 100, 150); // Renderizar resultado de la verificacion en (100, 150)
+
+		// Renderizar tiempo de ejecucion del subset sum
+		std::string timeText = "Tiempo de ejecucion: " + std::to_string(subsetSumTime) + " segundos";
+		renderText(timeText.c_str(), 100, 200); // Renderizar tiempo de ejecucion en (100, 200)
+
+		SDL_RenderPresent(renderer);
+	}
 }
 
 int Game::menor()

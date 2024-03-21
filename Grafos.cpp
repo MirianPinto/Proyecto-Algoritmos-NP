@@ -24,16 +24,16 @@ void Grafo::colorearGrafo() {
     colores[0] = 0;
 
     int numColores = sizeof(coloresDisponibles) / sizeof(coloresDisponibles[0]);
-
+    //Se recorre cada uno de los vertices.
     for (int u = 1; u < numVertices; u++) {
-        
+        //Se recorren todos los vértices adyacentes al vértice actual
         for (int i = 0; i < adj[u].size(); i++) {
             if (colores[adj[u][i]] != -1) {
                 coloresDisponibles[colores[adj[u][i]]].a = 0;  
             }
         }
 
-        
+        //busca el primer color disponible
         int cr;
         for (cr = 0; cr < numColores; cr++) {
             if (coloresDisponibles[cr].a != 0) {
@@ -45,10 +45,10 @@ void Grafo::colorearGrafo() {
             MessageBox(NULL, TEXT("No se pudo colorear el grafo con los colores disponibles."), TEXT("Error"), MB_OK);
             return;
         }
-
+        //asigna el color encontrado al vertice
         colores[u] = cr; 
 
-  
+        //restablece los colores utilizados por los vertices adyacentes al vertice actual como disponible
         for (int i = 0; i < adj[u].size(); i++) {
             if (colores[adj[u][i]] != -1) {
                 coloresDisponibles[colores[adj[u][i]]].a = 255;  
@@ -56,7 +56,7 @@ void Grafo::colorearGrafo() {
         }
     }
 
-
+    //recorre los vertices y asigna el color correspondiente
     for (int u = 0; u < numVertices; u++) {
         vertices[u].color = coloresDisponibles[colores[u]];
     }
@@ -68,8 +68,8 @@ void Grafo::colorearGrafoWelshPowell() {
     std::cout << "Colores disponibles: " << numColoresDisponibles << std::endl;
     // Verificar si hay suficientes colores para colorear el grafo
     if (numVertices > numColoresDisponibles) {
-        MessageBox(NULL, TEXT("No se pudo colorear el grafo con los colores disponibles."), TEXT("WelshPowell"), MB_OK);
-        return;
+           // MessageBox(NULL, TEXT("No se pudo colorear el grafo con los colores disponibles."), TEXT("WelshPowell"), MB_OK);
+            return;
     }
 
     std::vector<int> orden(numVertices);
