@@ -5,6 +5,9 @@ Para cada uno de los algoritmos se realizo un interfaz grafica utilizando la lib
 
 
 Para poder hacer funcionar el proyecto primero debes clonar el proyecto y descargar las siguientes librerias de SDL y configurarlas en le proyecto.
+
 SDL2_image-2.0.1
+
 SDL2_ttf-2.22.0
+
 SDL2-2.30.0
